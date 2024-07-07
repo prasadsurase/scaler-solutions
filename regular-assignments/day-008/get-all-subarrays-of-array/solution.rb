@@ -23,3 +23,5 @@ puts '-' * 100
 Solution.new.solve([5,2,1,4])
 puts '-' * 100
 Solution.new.solve([36,63,63,26,87,28,77,93,7])
+puts '-' * 100
+Solution.new.solve([1,2,4,4,5,5,5,7,5])
