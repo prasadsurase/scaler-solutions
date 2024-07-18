@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	fmt.Printf("%v\n", solve("11", "11"))
@@ -13,10 +16,64 @@ func main() {
 }
 
 func solve(a, b string) string {
-	aLen := len(a)
-	bLen := len(b)
+	i := len(a) - 1
+	j := len(b) - 1
+	result := []string{}
 
-	minLength = aLen < bLen ? aLen : bLen
-  maxLength = aLen > bLen ? aLen : bLen
+	carry := ""
 
+	for i >= 0 && j >= 0 {
+		resp := determine(a[i], b[j], carry)
+		carry = resp[1]
+		result = append([]string{resp[0]}, result...)
+		i--
+		j--
+	}
+
+	str := ""
+	itr := 0
+
+	if len(a) > len(b) {
+		str = a
+		itr = i
+	} else {
+		str = b
+		itr = j
+	}
+
+	for itr >= 0 {
+		resp := determine(str[itr], '0', carry)
+		carry = resp[1]
+		result = append([]string{resp[0]}, result...)
+
+		itr--
+	}
+
+	if carry == "1" {
+		result = append([]string{"1"}, result...)
+	}
+
+	return strings.Join(result, "")
+}
+
+func determine(x, y byte, carry string) []string {
+	arr := []string{string(x), string(y), carry}
+	count := 0
+	for i := 0; i < len(arr); i++ {
+		if arr[i] == "1" {
+			count += 1
+		}
+	}
+
+	switch count {
+	case 0:
+		return []string{"0", "0"}
+	case 1:
+		return []string{"1", "0"}
+	case 2:
+		return []string{"0", "1"}
+	case 3:
+		return []string{"1", "1"}
+	}
+	return []string{}
 }
