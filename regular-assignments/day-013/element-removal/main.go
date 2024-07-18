@@ -16,14 +16,6 @@ func solve(arr []int) int {
 	sort.Ints(arr)
 	slices.Reverse(arr)
 
-	// cost = 0
-	//   i = 0
-	//   while i < arr.length
-	//     cost += arr[i..-1].sum
-	//     i += 1
-	//   end
-	//   cost
-
 	cost := 0
 	for i := 0; i < len(arr); i++ {
 		for j := i; j < len(arr); j++ {
